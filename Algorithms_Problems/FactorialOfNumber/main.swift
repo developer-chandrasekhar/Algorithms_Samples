@@ -24,7 +24,7 @@ func factorialUsingLoop(n: UInt64) -> UInt64 {
     }
     return output
 }
-let number: UInt64 = 0
+let number: UInt64 = 5
 print("Using Recursion -> \(factorial(n: number))")
 print("Using Loop      -> \(factorialUsingLoop(n: number))")
 
