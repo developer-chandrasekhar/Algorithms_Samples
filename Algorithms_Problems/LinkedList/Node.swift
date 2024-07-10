@@ -52,7 +52,7 @@ class LinkedList<T: Equatable> {
         }
         if let nextNode = head.next {
            let result = self.deleteNode(shadow: head, next: nextNode, item: item)
-            printList(node: head)
+            printList()
             return result
         }
         return false
@@ -71,11 +71,90 @@ class LinkedList<T: Equatable> {
         }
     }
     
-    private func printList(node: Node<T>) {
-        print(node.data)
-        if let _node = node.next {
-            printList(node: _node)
+    private func printList() {
+        var currentNode = head
+        while let _currentNode = currentNode {
+            print("\(_currentNode.data)", terminator: "")
+            currentNode = _currentNode.next
+            print(currentNode != nil ? " -> " :  " -> nil ", terminator: "")
         }
+        print("")
     }
 }
 
+
+extension LinkedList {
+    
+    func reverseList() {
+        printList()
+        reverseWithSlidingWindow()
+        //reverse(mainNode: head)
+        printList()
+    }
+    
+    func createLoop() {
+        self.lastNode?.next = head
+    }
+    
+    func checkIsLoop() -> Bool {
+        
+        var slowNode: Node<T>? = head
+        var fastNode: Node<T>? = head
+        
+        while slowNode != nil && fastNode != nil {
+            slowNode = slowNode?.next
+            fastNode = fastNode?.next?.next
+            if slowNode === fastNode {
+                return true
+            }
+        }
+        return true
+
+        
+        
+//        repeat {
+//            if (slowNode === fastNode) && !isFirst {
+//                isLooped = true
+//                slowNode = nil
+//                fastNode = nil
+//            }
+//            else {
+//                isFirst = false
+//                slowNode = slowNode?.next
+//                fastNode = fastNode?.next?.next
+//                print(slowNode?.data ?? 0, terminator: "")
+//                print(fastNode?.data ?? 0, terminator: "")
+//                print("")
+//
+//            }
+//        } while slowNode != nil || fastNode != nil
+//        
+//        return isLooped
+    }
+}
+
+extension LinkedList {
+    private func reverse(tailingNode: Node<T>? = nil, mainNode: Node<T>?) {
+        if mainNode?.next != nil {
+            reverse(tailingNode: mainNode, mainNode: mainNode?.next)
+        }
+        else {
+            self.head = mainNode
+        }
+        mainNode?.next = tailingNode
+    }
+    
+    private func reverseWithSlidingWindow() {
+        var p: Node<T>? = nil
+        var q: Node<T>? = head
+        var r: Node<T>? = head?.next
+        
+        while q != nil {
+            q?.next = p
+            p = q
+            q = r
+            r = r?.next
+        }
+        head = p
+    }
+}
