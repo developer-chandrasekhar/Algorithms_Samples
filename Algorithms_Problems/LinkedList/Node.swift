@@ -19,7 +19,7 @@ class Node<T: Equatable> {
 
 class LinkedList<T: Equatable> {
     
-    private var head: Node<T>?
+    var head: Node<T>?
     private var lastNode: Node<T>?
     
     public func addElement(item: T) {
@@ -100,36 +100,23 @@ extension LinkedList {
         
         var slowNode: Node<T>? = head
         var fastNode: Node<T>? = head
+        var count = 1
         
         while slowNode != nil && fastNode != nil {
             slowNode = slowNode?.next
             fastNode = fastNode?.next?.next
+            print(slowNode?.data ?? 0, terminator: " ")
+            print(fastNode?.data ?? 0, terminator: "")
+            print("")
             if slowNode === fastNode {
+                print(count)
                 return true
             }
+            else {
+              count += 1
+            }
         }
-        return true
-
-        
-        
-//        repeat {
-//            if (slowNode === fastNode) && !isFirst {
-//                isLooped = true
-//                slowNode = nil
-//                fastNode = nil
-//            }
-//            else {
-//                isFirst = false
-//                slowNode = slowNode?.next
-//                fastNode = fastNode?.next?.next
-//                print(slowNode?.data ?? 0, terminator: "")
-//                print(fastNode?.data ?? 0, terminator: "")
-//                print("")
-//
-//            }
-//        } while slowNode != nil || fastNode != nil
-//        
-//        return isLooped
+        return false
     }
 }
 
