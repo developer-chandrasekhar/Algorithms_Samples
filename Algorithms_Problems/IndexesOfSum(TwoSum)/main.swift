@@ -52,6 +52,7 @@ import Foundation
 func lengthOfLastWord(_ s: String) -> Int {
     
     var length = 0
+
     var resetLength = true
     
     for val in s {
@@ -69,3 +70,22 @@ func lengthOfLastWord(_ s: String) -> Int {
     }
     return length
 }
+
+func isAnagram(_ s: String, _ t: String) -> Bool {
+    var sum: UInt8 = 0
+    let sArray = Array(s)
+    let tArray = Array(t)
+    if s.count != t.count { return false }
+    for i in 0..<s.count {
+        let sChar = sArray[i]
+        let scharValue = sChar.asciiValue
+        sum += scharValue ?? 0
+        let tChar = tArray[i]
+        let tcharValue = tChar.asciiValue
+        sum -= tcharValue ?? 0
+    }
+    return sum == 0
+    
+}
+
+
